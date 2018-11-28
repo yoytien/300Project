@@ -2,6 +2,7 @@ window.alert("in the admin.js");
 
 var submit = document.getElementById("AButon");
 //test 
+//test2
 
 function submit1(){
     window.alert("in the onclick function");
