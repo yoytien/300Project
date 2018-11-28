@@ -1,7 +1,7 @@
 window.alert("in the admin.js");
 
 var submit = document.getElementById("AButon");
-
+//test 
 
 function submit1(){
     window.alert("in the onclick function");
