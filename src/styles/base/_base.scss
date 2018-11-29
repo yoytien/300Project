@@ -1,0 +1,20 @@
+html{
+    font-size: 62.5%;
+}
+
+body {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: $m-size;
+} 
+
+button{
+    cursor: pointer; //show pointer hand
+}
+
+button:disabled{
+    cursor: default; //normal cursor
+}
+
+.is-active{
+    font-weight: bold;
+}
