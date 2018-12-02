@@ -61,7 +61,10 @@ export default class AdminHome extends React.Component{
 
     };
 
-
+    logOut= () => {
+        firebase.auth().signOut();
+        this.props.history.push("/");
+    };
     
     search= () =>{
         const matric = Studentid.value;     
@@ -97,6 +100,7 @@ export default class AdminHome extends React.Component{
              <Tab>Home</Tab>
              <Tab>Student</Tab>
              <Tab>Report</Tab>
+             <Tab>Log Out</Tab>
              </TabList>  
             <TabPanel>
                 <h2>About</h2>
@@ -136,15 +140,22 @@ export default class AdminHome extends React.Component{
 
                 
             </TabPanel>
+            <TabPanel>
+                <p>Are you want to logout?</p>
+                <button onClick={this.logOut}>Click for Log out</button>
+            </TabPanel>
+            
+            </Tabs>
+            
 
-        </Tabs>
+        
          
                       
                 
 
             
         )
-    }
+    };
 }
 
    

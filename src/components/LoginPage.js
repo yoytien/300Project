@@ -9,7 +9,8 @@ export default class LoginPage extends React.Component{
 
         this.state={
             email: '',
-            password: ''
+            password: '',
+            
         };
     }
 
@@ -27,6 +28,7 @@ export default class LoginPage extends React.Component{
         const auth= firebase.auth();
         const promise= auth.signInWithEmailAndPassword(this.state.email,this.state.password);
         promise.catch( e => console.log(e.message));
+
     }
 
     logOut= () => {
@@ -42,7 +44,9 @@ export default class LoginPage extends React.Component{
                     {
                         firebaseUser.sendEmailVerification();
                     } 
-                    this.props.history.push("/adminpage");
+                    
+                        this.props.history.push("/adminpage");
+                   
                 }else {
                     console.log('Unauthorized/ logout');
                 }
