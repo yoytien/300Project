@@ -1,5 +1,6 @@
 import React from 'react';
 import * as firebase from 'firebase';
+import { Redirect } from 'react-router-dom';
 
 export default class LoginPage extends React.Component{
 
@@ -36,7 +37,12 @@ export default class LoginPage extends React.Component{
         firebase.auth().onAuthStateChanged( firebaseUser => {
                 if(firebaseUser){
                     console.log('Authorized')
-                    console.log(firebaseUser);      
+                    console.log(firebaseUser);   
+                    if(!firebaseUser.isEmailVerified) 
+                    {
+                        firebaseUser.sendEmailVerification();
+                    } 
+                    this.props.history.push("/adminpage");
                 }else {
                     console.log('Unauthorized/ logout');
                 }
@@ -50,7 +56,7 @@ export default class LoginPage extends React.Component{
                 <input type="password" placeholder="Password" onChange={this.onPasswordChange}/>
 
                 <button onClick={this.logIn} >Log In</button>
-                <button onClick={this.logOut}>Log Out</button>
+                
 
             </div>
         )

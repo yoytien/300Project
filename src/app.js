@@ -9,6 +9,8 @@ import 'react-dates/lib/css/_datepicker.css'; // see SingleDatePicker airbnb git
 import {firebase} from './firebase/firebase';
 
 
+
+
 const store = configureStore();
 
 
