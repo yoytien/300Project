@@ -11,6 +11,7 @@ update log
 1. predesign the ui.
 2. add function query student information using matric
 3. add function register course using matric and course code
+
 progress need to done:
 query for generate report.
 design report visualization
