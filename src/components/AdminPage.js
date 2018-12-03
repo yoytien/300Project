@@ -1,12 +1,15 @@
-import React from 'react';
+import React,{Component} from 'react';
 import * as firebase from 'firebase';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import "react-tabs/style/react-tabs.css";
-import {NavLink} from 'react-router-dom';
+import {LineChart} from 'react-easy-chart';
 
 
 
-export default class AdminHome extends React.Component{
+
+
+
+export default class AdminPage extends React.Component{
 
 
     constructor(props){
@@ -35,31 +38,37 @@ export default class AdminHome extends React.Component{
         this.setState(() => ({coursecode}));
     };
 
-    
+          
+
+
+
+
 
    btnClick=()=>{
     const matric = Studentid.value;
     const course2 = coursecode.value;     
-    var ref = firebase.database().ref("Student");
+    var ref = firebase.database().ref("Students");
     ref.orderByChild("/MatricNo").on("child_added", function(snapshot) {
      //console.log(snapshot.key);
      const a = snapshot.key; 
-    var name= snapshot.child("Name").val();
-    var year=snapshot.child("Year").val();
+    
     var matric1 = snapshot.child("MatricNo").val();
-    var cs= snapshot.child("CourseTaken");
+    var cs= snapshot.child("CoursesTaken");
     console.log(cs);
    
     if(matric== matric1){
         
     var id = a;
+    firebase.database().ref("Students/"+id+"/CoursesTaken/"+course2).set("Active");
+    
     }
     console.log(id);
-    firebase.database().ref("Student/"+id+"/CourseTaken/"+course2).set("Active");
+    
 });
 
 
     };
+
 
     logOut= () => {
         firebase.auth().signOut();
@@ -68,32 +77,46 @@ export default class AdminHome extends React.Component{
     
     search= () =>{
         const matric = Studentid.value;     
-        var ref = firebase.database().ref("Student");
+        var ref = firebase.database().ref("Students");
         ref.orderByChild("/MatricNo").on("child_added", function(snapshot) {
          //console.log(snapshot.key);
-         const a = snapshot.key; 
+        const a = snapshot.key; 
         var name= snapshot.child("Name").val();
-        var year=snapshot.child("Year").val();
-        var matric1 = snapshot.child("MatricNo").val();
-        
-       
-        
-        if(matric== matric1){
-            
-        document.getElementById('StudentINFO').innerHTML = 'Name:'+ name +'</br>'+'Matric:'+ matric1 +'</br>'+'Year:'+ year +'</br>';
+        //var year=snapshot.child("Year").val();
+        var matric1 = snapshot.child("MatricNo").val();        
+        if(matric== matric1){      
+        document.getElementById('StudentINFO').innerHTML = 'Name:'+ name +'</br>'+'Matric:'+ matric1 +'</br>';
         }else
         {
             document.getElementById('StudentINFO').innerHTML = 'Student ' + matric +' does not Exits';
         }
     
     });
-        };    
+     };    
           
+    Greport=()=>{
+        
+        const database=firebase.database();
+        database.ref("ClassSession/CAT300").on('value', (snapshot)=>{
+            const data=[];
+            snapshot.forEach((childSnapshot)=>{
+                data.push({
+                    id: childSnapshot.key,
+                    ...childSnapshot.val()
+                });
+            }
+            );
+            console.log(data);
+        });
+
+
+
+    }
    
     render(){
-        return(
-           
-           
+        
+        return (
+               
             <Tabs>
              
              <TabList>
@@ -135,8 +158,25 @@ export default class AdminHome extends React.Component{
                 Generate Report
                <p> Course: <input id ="Rcourse"></input></p>
                <button onClick={this.Greport}>Generate Report</button>
-
-
+             <div>
+             <LineChart
+                axes
+                margin={{top: 10, right: 10, bottom: 50, left: 50}}
+                axisLabels={{x: 'My x Axis', y: 'My y Axis'}}
+                width={250}
+                height={250}
+                xType={'text'}
+                data={[
+                [
+                    { x: "CMT222_tutorial_2018-12-22_20:00", y: 20 },
+                    { x: "CMT222_tutorial_2018-12-21_22:00", y: 10 },
+                    { x: "savCMT222_tutorial_2018-12-24_20:00ec", y: 25 }
+                ]
+                ]}
+            /> 
+            
+             </div>
+            
 
                 
             </TabPanel>
@@ -146,16 +186,8 @@ export default class AdminHome extends React.Component{
             </TabPanel>
             
             </Tabs>
-            
-
-        
-         
-                      
-                
-
-            
-        )
-    };
+        );
+    }
 }
 
    
