@@ -12,6 +12,13 @@ update log
 2. add function query student information using matric
 3. add function register course using matric and course code
 
+4/12/2018-7.18pm
+1. add tap lecturer course.
+2. revise read student , course from database.
+3. course tab add function "add course"
+4. lecture tab add function add courseTeach
+
+
 progress need to done:
 query for generate report.
 design report visualization
