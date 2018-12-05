@@ -221,7 +221,7 @@ export default class AdminPage extends React.Component{
      var rootref=firebase.database().ref().child("Class");
      document.getElementById('classoption3').innerHTML= " <option value='' disabled selected>Select class</option> ";
 
-     rootref.on("value", snap => {
+     rootref.once("value", snap => {
          snap.forEach(function(itemSnapshot) {
            var code= itemSnapshot.key;
            var courseName= rootref.child(code).child("classname");
