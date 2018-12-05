@@ -111,9 +111,6 @@ export default class AdminPage extends React.Component{
 
 
     };
-        
-    
-
 
    btnClick=()=>{
     const matric = Studentopt.value;
@@ -174,23 +171,55 @@ export default class AdminPage extends React.Component{
     });
      };    
           
-    Greport=()=>{
-        
+     Greport=()=>{
+        document.getElementById("chart").innerHTML= "<ul>Attendance list";
         var rCourse=classoption3.value;
-        var ref = firebase.database().ref().child('Class/'+rCourse);
-        ref.on('value',snap=>{
+        var ref = firebase.database().ref().child('Class/'+rCourse+'/ClassSession');
+        ref.once('value',snap=>{
             snap.forEach(function(itemSnapshot){
                 var classdate=itemSnapshot.key;
-                console.log(classdate)
+                var split = classdate.split("_");
+                var date = firebase.database().ref().child("Class").child(rCourse).child("ClassSession").child(split[2]).key;
+                var time = firebase.database().ref().child("Class").child(rCourse).child("ClassSession").child(split[3]).key;
+               // document.getElementById("chart").innerHTML+="<li>"+classdate+"</li>";
+                var dNt= date+ ' '+time;
+                 var path=ref.child(classdate+"/Attendance_count");
+                 var count=0;
+                 var s;
+                var attendance = ref.child(classdate+"/Attendance");
+                attendance.once("value",snap2=>{
+                    snap2.forEach(function(itemSnapshot2){
+                      s= itemSnapshot2.val();
+                      if(count==0)
+                      {document.getElementById("chart").innerHTML+="</br></br><b><li>" +dNt+"</li></b>";}
+                         count=count+1;
+                         document.getElementById("chart").innerHTML+= "<li>"+s+"</li>"
+                        path.set({
+                             Attendance_total: count
+                        })
+                                    
+                        
+                     }) 
+                     if(count==0)
+                        {document.getElementById("chart").innerHTML+="</br></br><b><li>"+dNt+"</li></b>";
+                            document.getElementById("chart").innerHTML+= "<li>NULL</li>"}
+
+                        document.getElementById("chart").innerHTML+="__________End of list____________";
+                      
+                     path.set({
+                         Attendance_total: count
+                     })
+                    
+                     
+                })
+                
+            
             })
         })
-        
-
-
-
-
-
-    };
+         document.getElementById("chart").innerHTML+= "</ul>";
+        // document.getElementById("chart").innerHTML+= "__________End of report____________";
+       
+        };
 
     
     ts=()=>{
@@ -371,23 +400,8 @@ export default class AdminPage extends React.Component{
                   <p className="help-block text-danger"></p>
                   </div>
                <button onClick={this.Greport}>Generate Report</button>
-             <div>
-             <LineChart
-                axes
-                margin={{top: 10, right: 10, bottom: 50, left: 50}}
-                axisLabels={{x: 'My x Axis', y: 'My y Axis'}}
-                width={250}
-                height={250}
-                xType={'text'}
-                data={[
-                [
-                    { x: "CMT222_tutorial_2018-12-22_20:00", y: 20 },
-                    { x: "CMT222_tutorial_2018-12-21_22:00", y: 10 },
-                    { x: "savCMT222_tutorial_2018-12-24_20:00ec", y: 25 }
-                ]
-                ]}
-            /> 
-            
+             <div id="chart">
+             
              </div>
             
 
