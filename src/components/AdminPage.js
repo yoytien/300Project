@@ -103,7 +103,7 @@ export default class AdminPage extends React.Component{
         
     var id = a;
     firebase.database().ref("Lecturer/"+id+"/CoursesTeach/"+course2).set("Active");
-    
+    window.alert('Add course '+course2+'to Lecturer id '+matric1 +'success..' )
     }
     
     
@@ -128,7 +128,7 @@ export default class AdminPage extends React.Component{
         
     var id = a;
     firebase.database().ref("Students/"+id+"/CoursesTaken/"+course2).set("Active");
-    
+    window.alert('Add course '+course2+'to student id '+matric1 +'success..' )
     }
     
     
@@ -142,34 +142,7 @@ export default class AdminPage extends React.Component{
         firebase.auth().signOut();
         this.props.history.push("/");
     };
-    
-    search= () =>{
-        const matric = Studentopt.value;     
-        var ref = firebase.database().ref("Students");
-        ref.orderByChild("/MatricNo").on("child_added", function(snapshot) {
-         //console.log(snapshot.key);
-        const a = snapshot.key; 
-        var name= snapshot.child("Name").val();
-        //var year=snapshot.child("Year").val();
-        var matric1 = snapshot.child("MatricNo").val();
-
-        if(matric== matric1){   
-
-        document.getElementById('StudentINFO').innerHTML = 'Name:'+ name +'</br>'+'Matric:'+ matric1 +'</br>';
-        document.getElementById('StudentINFO').innerHTML += 'course taken';
-        // var lsm=ref.child(a).child('CoursesTaken');
         
-        
-        
-     
-    
-        }else
-        {
-            document.getElementById('StudentINFO').innerHTML = 'Student ' + matric +' does not Exits';
-        }
-    
-    });
-     };    
           
      Greport=()=>{
         document.getElementById("chart").innerHTML= "<ul>Attendance list";
@@ -234,7 +207,7 @@ export default class AdminPage extends React.Component{
            courseName.once("value")
            .then((snap2)=> {
                var name= snap2.val();
-               console.log(code+ " " +name);
+               
               
               document.getElementById('classoption2').innerHTML +="<option value='" + code +"'>"+ code +" "+ name +"</option>"; 
             
@@ -277,6 +250,9 @@ export default class AdminPage extends React.Component{
         addCourse.set({
             classname: add_name
         });
+        window.alert("course added to "+add_code);
+    }else{
+        window.alert("Please select course");
     }
     };
     listCourse=()=>{
@@ -339,15 +315,15 @@ export default class AdminPage extends React.Component{
             Assign Course to Lecturer
 
                 < p> 
-                    Student ID: <select className="form-control " name="choice"  required="required" id="LecturerOpt"  >
+                    Lecturer ID: <select className="form-control " name="choice"  required="required" id="LecturerOpt"  >
                   <option defaultValue="" disabled selected>Select Lecturer</option>
                   </select>
                   <button onClick={this.stu2}>Refresh</button>
                </p>
 
                 <div className="form-group">
-                  <select className="form-control " name="choice"  required="required" id="CourseChoose"  >
-                  <option defaultValue="" disabled selected>Select Course</option>
+                Course:<select className="form-control " name="choice"  required="required" id="CourseChoose"  >
+                   <option defaultValue="" disabled selected>Select Course</option>
                   
                   </select> <button onClick={this.ts2}>Refresh</button>
                   <p className="help-block text-danger"></p>
@@ -367,19 +343,11 @@ export default class AdminPage extends React.Component{
                   </select>
                   <button onClick={this.stu}>Refresh</button>
                </p>
-                <button onClick={this.search}>Search</button>
-
-               <div id="StudentINFO"></div>
 
                 <h3>Course register</h3>
 
-               
-               {/* <p>
-                    Course to add: <input id="coursecode"></input> 
-                </p> */}
-
                 <div className="form-group">
-                  <select className="form-control " name="choice"  required="required" id="classoption2"  >
+                  Course:<select className="form-control " name="choice"  required="required" id="classoption2"  >
                   <option defaultValue="" disabled selected>Select class</option>
                   
                   </select> <button onClick={this.ts}>Refresh</button>
@@ -393,8 +361,8 @@ export default class AdminPage extends React.Component{
             <TabPanel>
                 Generate Report
                 <div className="form-group">
-                  <select className="form-control " name="choice"  required="required" id="classoption3" >
-                  <option defaultValue="" disabled selected>Select class</option>
+                  For Course: <select className="form-control " name="choice"  required="required" id="classoption3" >
+                  <option defaultValue="" disabled selected>Select Course</option>
                   
                   </select> <button onClick={this.ls}>Refresh</button>
                   <p className="help-block text-danger"></p>
@@ -403,9 +371,7 @@ export default class AdminPage extends React.Component{
              <div id="chart">
              
              </div>
-            
-
-                
+  
             </TabPanel>
             <TabPanel>
                 <p>Are you want to logout?</p>
@@ -418,5 +384,3 @@ export default class AdminPage extends React.Component{
     }
     
 }
-
-   
