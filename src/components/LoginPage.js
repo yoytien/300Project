@@ -37,7 +37,8 @@ export default class LoginPage extends React.Component{
 
     componentDidMount(){
         firebase.auth().onAuthStateChanged( firebaseUser => {
-                if(firebaseUser){
+                
+                    if(firebaseUser){
                     console.log('Authorized')
                     console.log(firebaseUser);   
                     if(!firebaseUser.isEmailVerified) 
@@ -46,6 +47,10 @@ export default class LoginPage extends React.Component{
                     } 
                     
                         this.props.history.push("/adminpage");
+                
+                        
+                   
+                        
                    
                 }else {
                     console.log('Unauthorized/ logout');

@@ -2,7 +2,6 @@ import React,{Component} from 'react';
 import * as firebase from 'firebase';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import "react-tabs/style/react-tabs.css";
-import {LineChart} from 'react-easy-chart';
 
 
 
