@@ -27,7 +27,7 @@
     "express": "^4.16.4",
     "extract-text-webpack-plugin": "3.0.0",
     "firebase": "^4.2.0",
-    "moment": "2.18.1",
+    "moment": "2.19.3",
     "node-sass": "4.5.3",
     "normalize.css": "7.0.0",
     "plotly.js": "^1.42.5",
